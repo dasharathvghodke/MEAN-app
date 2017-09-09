@@ -1,0 +1,97 @@
+
+
+<div class = "page-header">
+	<h1 ng-if = "empCtrl.type == 'create' ">Create Employee</h1>
+	<h1 ng-if = "empCtrl.type == 'edit'">Edit Employee</h1>
+</div>
+
+<form name = "myForm" class = "form-horizontal" ng-submit="empCtrl.saveEmployee()">
+	
+	<div class = "form-group">
+		<label class = "col-sm-2 control-label">Name</label>
+		<div class = "col-sm-6">
+			<input type = "text"
+			 class = "form-control"
+			 ng-model = "empCtrl.employeeData.name">
+		</div>
+	</div>
+
+	<div class = "form-group">
+		<label class = "col-sm-2 control-label">Email</label>
+		<div class = "col-sm-6">
+		<input type = "text" name="email"
+			class = "form-control"
+			placeholder="me@example.com" 
+			ng-model = "empCtrl.employeeData.email"
+			ng-pattern="vm.emailFormat" required>
+		</div>
+		<span style="color:Red" ng-show="myForm.email.$error.pattern">Email is not valid</span>
+	</div>
+
+
+	<div class = "form-group">
+		<label class = "col-sm-2 control-label">Address</label>
+		<div class = "col-sm-6">
+		<input type = "text"
+			class = "form-control"
+			ng-model = "empCtrl.employeeData.address">
+		</div>
+	</div>
+
+	<div class = "form-group">
+		<label class = "col-sm-2 control-label">Date Of Birth</label>
+		<div class = "col-sm-6">
+		<input type = "date"
+			class = "form-control"
+			ng-model = "empCtrl.employeeData.dob">
+		</div>
+	</div>
+
+	<div class = "form-group">
+		<label class = "col-sm-2 control-label">Phone</label>
+		<div class = "col-sm-6">
+		<input type = "text" name="phone"
+			class = "form-control"
+			ng-model = "empCtrl.employeeData.phone"
+			ng-pattern="/^[0-9]{1,10}$/"/>
+		</div>
+
+	</div>
+
+	<div class = "form-group">
+		<label class = "col-sm-2 control-label">Profile Image</label>
+		<div class = "col-sm-6">
+		<!-- <input class = "form-control" type="file" ngf-select ng-model="employee.employeeData.address" name="file"    
+             accept="image/*" ngf-max-size="2MB" required
+             ngf-model-invalid="errorFile">
+        <img ng-show="myForm.file.$valid" ngf-thumbnail="picFile" class="thumb"> -->
+        <div class="button" ngf-select ng-model="file" name="file" ngf-pattern="'image/*'"
+           ngf-accept="'image/*'" ngf-max-size="20MB" ngf-min-height="100"
+           ngf-resize="{width: 100, height: 100}">Select</div>
+		</div>
+
+	</div>
+    
+	<div class = "form-group">
+	<div class = "col-sm-offset-2 col-sm-6">
+		<button type ="submit"
+			class = "btn btn-success btn-lg btn-block"
+			ng-if = "empCtrl.type == 'create' ">Create Employee</button>
+		<button type ="submit"
+			class = "btn btn-success btn-lg btn-block"
+			ng-if = "empCtrl.type == 'edit' ">Update Employee</button>
+	</div>
+	</div>
+ 
+</form>
+
+<div class = "row show-hide-message" ng-show="empCtrl.message">
+	<div class = "col-sm-6 col-sm-offset-2">
+
+		<div class = "alert alert-info">
+		{{ empCtrl.message }}
+		</div>
+	
+
+	</div>
+</div>
