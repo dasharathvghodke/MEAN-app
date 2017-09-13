@@ -1,17 +1,29 @@
 //inject the stuff service into main Angular module
 angular.module('employeeCtrl', ['employeeService', 'ngFileUpload'])	
 //create a controller and inject the Stuff factory
-	.controller('employeeController',function(Employee)	{
+	.controller('employeeController',function($scope, Employee)	{
 		
 		var vm = this;
 
 		//	set a processing variable to show loading things
 		vm.processing = true;
+        
+        $scope.filt = 'All';
+         $scope.setFilter = function(letter) {
+           $scope.filt = letter;
+         };
 
+         $scope.names = ['All', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+
+         $scope.startsWith = function(employee) {
+           var lowerStr = (employee.name + "").toLowerCase();
+           var letter = $scope.filt;
+           if (letter === 'All') return true;
+           return lowerStr.indexOf(letter.toLowerCase()) === 0;
+         }
 		//	grab all the employees at page load
 		Employee.all()
 		.success(function(data)	{
-		
 		//	when all the employees come back, remove the processing variable
 			vm.processing = false;
 			//bind the data to a controller variable
@@ -36,6 +48,16 @@ angular.module('employeeCtrl', ['employeeService', 'ngFileUpload'])
 					});
 				});
 			};
+
+		vm.arrayBufferToBase64 = function(buffer) {
+	      var binary = '';
+	      var bytes = new Uint8Array(buffer);
+	      var len = bytes.byteLength;
+	      for (var i = 0; i < len; i++) {
+	        binary += String.fromCharCode(bytes[i]);
+	      }
+	      return window.btoa(binary);
+	    }
 	})
 
 // controller applied to employee creation page

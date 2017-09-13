@@ -1,5 +1,6 @@
 angular.module('userApp', [
 	'ngAnimate',
+	'ui.bootstrap',
 	'app.routes',
 	'authService',
 	'userService',

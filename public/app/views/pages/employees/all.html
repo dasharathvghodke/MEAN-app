@@ -1,6 +1,6 @@
 <div class = "page-header">
 	<h1>
-		Employees
+		Employees:
 		<a href = "/employees/create" class = "btn btn-defaul">
 			<span class = "glyphicon glyphicon-plus>"></span>
 			New Employee
@@ -13,36 +13,29 @@
 	<span class = "glyphicon glyphicon-repeat spinner"></span>
 	<p> Loading Employees ...</p>
 </div>
-
-<table class = "table table-bordered table-striped" ng-show = "empCtrl.employees">
-<thead>
-	<tr>
-		<th>ID</th>
-		<th>Name</th>
-		<th>Email</th>
-		<th>Address</th>
-		<th>Date of Birth</th>
-		<th>Phone</th>
-		<th>Image</th>
-	</tr>
-</thead>
-
-<tbody>	
-<!-- LOOP OVER THE USERS -->
-	<tr ng-repeat = "employee in empCtrl.employees">
-		<td>{{ employee._id }}</td>
-		<td>{{ employee.name }}</td>
-		<td>{{ employee.email }}</td>
-		<td>{{ employee.address }}</td>
-		<td>{{ employee.dob }}</td>
-		<td>{{ employee.phone }}</td>
-		<td>{{ employee.image.imageName }}</td>
-		<td class = "col-sm-2">
-			<a ng-href = "/employees/{{employee._id}}" class = "btn btn-danger">Edit</a>
-		</td>
-		<td> <a href = "#"
-			ng-click = "empCtrl.deleteEmployee(employee._id)"
-			class = "btn btn-primary"> Delete</a></td>
-	</tr>
-</tbody>	
-</table>
+<div class="container">
+    <div class="row">
+        <div ng-repeat="employee in empCtrl.employees | filter:startsWith | orderBy: 'Name'">
+            <div class="clearfix" ng-if="$index % 3 == 0"></div>
+            <div class="col-sm-4">
+                <div class="recipeimgbg"><img ng-src="data:{{employee.image.image.contentType}};base64,{{empCtrl.arrayBufferToBase64(employee.image.image.data.data)}}" width="154px" height="100px"/></div>
+				<div style="margin:auto;">
+					<div class="recipename">
+					{{employee.name}}<br />
+					<span class="recipenamegry">{{employee.dob}}</span>
+					</div>
+					<div class="memberrecipe">
+					{{employee.phone}}
+					</div>
+				</div>
+            </div>
+        </div>
+    </div>
+    <div class="pagination">
+    	<table>
+    	    <tr>
+    	       <td ng-repeat="letter in names">&nbsp;<span ng-click="setFilter(letter)">{{letter}}</span>|</td>
+    	    </tr>
+    	</table>
+    </div>
+</div>
